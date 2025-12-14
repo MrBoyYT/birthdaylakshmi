@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Lakshmii</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(#3a0c3c, #ffd1dc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* ===== EXISTING STYLES (UNCHANGED) ===== */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: twinkle 3s infinite;
+}
+@keyframes twinkle {
+    0%,100% { opacity:0.2; }
+    50% { opacity:1; }
+}
+
+.shooting-star {
+    position: absolute;
+    width: 3px;
+    height: 80px;
+    background: linear-gradient(white, transparent);
+    transform: rotate(45deg);
+    opacity: 0;
+    animation: shoot 2s ease-in-out forwards;
+}
+@keyframes shoot {
+    0% { transform: translate(0,0) rotate(45deg); opacity:1; }
+    100% { transform: translate(800px,-400px) rotate(45deg); opacity:0; }
+}
+
+.card {
+    background: rgba(255,255,255,0.95);
+    width: 90%;
+    max-width: 450px;
+    padding: 28px;
+    border-radius: 26px;
+    text-align: center;
+    border: 2px solid #d4af37;
+    box-shadow: 0 20px 50px rgba(212,175,55,0.5);
+    transform: scale(0);
+    opacity: 0;
+    animation: reveal 1s forwards 0.5s;
+    position: relative;
+    z-index: 10;
+}
+
+h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    color: #c2185b;
+    text-shadow: 0 0 10px #ff85a2, 0 0 20px #ff4081;
+}
+
+h2 { color: #d4af37; }
+
+@keyframes reveal {
+    to { transform: scale(1); opacity:1; }
+}
+
+.photo-box {
+    width: 160px;
+    height: 160px;
+    margin: 15px auto;
+    border-radius: 50%;
+    border: 3px solid #d4af37;
+    overflow: hidden;
+}
+
+.photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#message {
+    width: 100%;
+    height: 140px;
+    border-radius: 16px;
+    padding: 12px;
+    border: 1.5px solid #d4af37;
+    margin-top: 10px;
+    background: #fff0f5;
+}
+
+/* ===== NEW BUTTON STYLE (ADDED ONLY) ===== */
+#nextBtn {
+    margin-top: 15px;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 20px;
+    background: #ff4081;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== BIRTHDAY CARD (UNCHANGED) ===== -->
+<div id="card" class="card">
+    <h1>Happy Birthday</h1>
+    <h2>Lakshmiii chechiii ✨</h2>
+
+    <div class="photo-box">
+        <img src="photo.jpg">
+    </div>
+
+    <textarea id="message" readonly></textarea>
+
+    <!-- 🔹 ADDED NEXT BUTTON (ONLY ADDITION) -->
+    <button id="nextBtn">Next ➜ Memories</button>
+</div>
+
+<!-- ===== CHILDHOOD MEMORIES PAGE (NEW ADDITION) ===== -->
+<div id="memoryPage" style="
+    position:fixed;
+    inset:0;
+    background:linear-gradient(#ffd1dc,#3a0c3c);
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:50;
+    text-align:center;
+">
+
+    <h1 style="font-family:'Great Vibes',cursive;color:white;font-size:3rem;">
+        Childhood Memories 💖
+    </h1>
+
+    <div style="
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:15px;
+        width:80%;
+        max-width:400px;
+        margin-top:20px;
+    ">
+        <img src="memory1.jpg" style="width:100%;border-radius:20px;border:3px solid gold;">
+        <img src="memory2.jpg" style="width:100%;border-radius:20px;border:3px solid gold;">
+        <img src="memory3.jpg" style="width:100%;border-radius:20px;border:3px solid gold;">
+        <img src="memory4.jpg" style="width:100%;border-radius:20px;border:3px solid gold;">
+    </div>
+
+    <button id="backBtn" style="
+        margin-top:25px;
+        padding:10px 25px;
+        border:none;
+        border-radius:20px;
+        background:#ff4081;
+        color:white;
+        font-size:1rem;
+        cursor:pointer;
+    ">
+        ⬅ Back
+    </button>
+</div>
+
+<script>
+/* ===== TYPEWRITER (UNCHANGED) ===== */
+const messageText = `Dear Lakshmiii chechi,
+
+Wishing you joy, love, and endless smiles.
+Happy Birthday 🎂💖`;
+
+let msgBox = document.getElementById("message");
+let i = 0;
+function typeWriter() {
+    if (i < messageText.length) {
+        msgBox.value += messageText.charAt(i);
+        i++;
+        setTimeout(typeWriter, 40);
+    }
+}
+typeWriter();
+
+/* ===== NEW PAGE LOGIC (ONLY ADDITION) ===== */
+const nextBtn = document.getElementById("nextBtn");
+const backBtn = document.getElementById("backBtn");
+const memoryPage = document.getElementById("memoryPage");
+const cardPage = document.getElementById("card");
+
+nextBtn.onclick = () => {
+    cardPage.style.display = "none";
+    memoryPage.style.display = "flex";
+};
+
+backBtn.onclick = () => {
+    memoryPage.style.display = "none";
+    cardPage.style.display = "block";
+};
+</script>
+
+</body>
+</html>
